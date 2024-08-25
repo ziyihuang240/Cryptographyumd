@@ -30,7 +30,7 @@ void determinekeylength()
         {
             p[keylength - 1] += (counter[i] * counter[i]) / (number * number);
         }
-        printf("%f ", p[keylength - 1]);
+        printf("Key length %d gives %f\n", keylength, p[keylength - 1]);
 
         fclose(fpIn);
     }
