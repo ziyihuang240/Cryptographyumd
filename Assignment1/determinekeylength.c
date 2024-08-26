@@ -6,33 +6,34 @@ int chartoint(char c)
 
 void determinekeylength()
 {
+    int keylength;// Possible key length from 1 to 13
+for (keylength = 5; keylength <= 20; keylength++) {
     unsigned char ch[2];
-    double counter[256] = { 0 }; // number of times each byte appears
+    double counter[256] = { 0 }; // each byte
     FILE* fpIn;
-    double N = 0; int keylength; // Possible key length from 1 to 13
+    double N = 0;
     int i;
-    double number = 0; // total number of characters considered
-    double p[13] = { 0 }; // probability calculated for each possible keylength
-    for (keylength = 1; keylength <= 13; keylength++) {
-        fpIn = fopen("ctext.txt", "r"); // text form Hex
-        i = 0;
-        while (fscanf(fpIn, "%c", &ch[0]) != EOF) { // Hex is stored as plain text
-            fscanf(fpIn, "%c", &ch[1]);
-            if (N == 0) {
-                i = 16 * chartoint(ch[0]) + chartoint(ch[1]);
-                number++;
-                counter[i]++;
-                N = keylength;
-            }
-            N--;
+    double number = 0; // number of characters chosen
+    double p[20] = { 0 };
+    fpIn = fopen("ctext.txt", "r"); // text form Hex
+    i = 0;
+    while (fscanf(fpIn, "%c", &ch[0]) != EOF) {
+        fscanf(fpIn, "%c", &ch[1]);
+        if (N == 0) {
+            i = 16 * chartoint(ch[0]) + chartoint(ch[1]);
+            number++;
+            counter[i]++;
+            N = keylength;
         }
-        for (i = 0; i != 256; i++)
-        {
-            p[keylength - 1] += (counter[i] * counter[i]) / (number * number);
-        }
-        printf("Key length %d gives %f\n", keylength, p[keylength - 1]);
-
-        fclose(fpIn);
+        N--;
     }
-    return;
+    for (i = 0; i != 256; i++)
+    {
+        p[keylength - 1] += (counter[i] * counter[i]) / (number * number);
+    }
+    printf("Keylength %d gives %f\n", keylength, p[keylength - 1]);
+
+    fclose(fpIn);
+}
+return;
 }
