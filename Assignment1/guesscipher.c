@@ -1,7 +1,6 @@
 /*
-possible KEY_LENGTH : 7 or 12
 possible cipher : 
-160-191 at 0 (should be 186 since last char is probably '.')
+160-191 at 0
 0-95    at 1
 128-223 at 2
 160-191 at 3
